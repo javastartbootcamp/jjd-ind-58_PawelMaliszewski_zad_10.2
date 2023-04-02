@@ -43,4 +43,16 @@ public class Monthly extends Contract {
             System.out.println("Faktura nieopłacona wiadomości wychodzące zablokowane\n");
         }
     }
+
+    private String billStatus() {
+        if (billPaid) {
+            return "zapłacona";
+        }
+        return "niezapłacona";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Faktura: " + billStatus();
+    }
 }
