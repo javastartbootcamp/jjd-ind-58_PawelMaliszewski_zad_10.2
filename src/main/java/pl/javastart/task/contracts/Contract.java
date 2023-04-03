@@ -3,8 +3,8 @@ package pl.javastart.task.contracts;
 public abstract class Contract {
 
     protected static final int SIXTY_SECONDS = 60;
-    protected int textsSent;
-    protected int mmsSent;
+    protected int textMassagesSent;
+    protected int multimediaMassagesSent;
     protected int callDurationInSeconds;
 
     protected void updateCallDuration(int seconds) {
@@ -14,14 +14,14 @@ public abstract class Contract {
     @Override
     public String toString() {
         return  "=== STAN KONTA === \n"
-                + "Wysłanych SMSów: " + textsSent + "\n"
-                + "Wysłanych MMSów: " + mmsSent + "\n"
+                + "Wysłanych SMSów: " + textMassagesSent + "\n"
+                + "Wysłanych MMSów: " + multimediaMassagesSent + "\n"
                 + "Liczba sekund rozmowy: " + callDurationInSeconds + "\n";
     }
 
-    public abstract void phoneCall(int seconds);
+    public abstract int phoneCall(int seconds);
 
-    public abstract void sendText();
+    public abstract boolean sendText();
 
-    public abstract void sendMms();
+    public abstract boolean sendMms();
 }

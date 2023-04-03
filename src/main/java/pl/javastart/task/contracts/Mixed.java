@@ -14,16 +14,17 @@ public class Mixed extends PrePaid {
     }
 
     @Override
-    public void phoneCall(int seconds) {
-        if (bundleSecondLeft() - seconds >= 0) {
+    public int phoneCall(int seconds) {
+        int bundleSecondsLeft = bundleSecondLeft();
+        if (bundleSecondsLeft - seconds >= 0) {
             updateBundleMinutes(seconds);
             updateCallDuration(seconds);
-        } else if (bundleSecondLeft() > 0 && bundleSecondLeft() - seconds < 0) {
-            super.phoneCall((seconds - bundleSecondLeft()));
-            updateCallDuration(bundleSecondLeft());
-            updateBundleMinutes(bundleSecondLeft());
+            return seconds;
         } else {
-            super.phoneCall(seconds);
+            int callSeconds = super.phoneCall((seconds - bundleSecondsLeft));
+            updateCallDuration(bundleSecondsLeft);
+            updateBundleMinutes(bundleSecondsLeft);
+            return callSeconds + bundleSecondsLeft;
         }
     }
 
@@ -36,25 +37,23 @@ public class Mixed extends PrePaid {
     }
 
     @Override
-    public void sendText() {
+    public boolean sendText() {
         if (bundleTexts > 0) {
-            textsSent++;
+            textMassagesSent++;
             bundleTexts--;
-            System.out.println("SMS wysłany\n");
-        } else {
-            super.sendText();
+            return true;
         }
+        return super.sendText();
     }
 
     @Override
-    public void sendMms() {
+    public boolean sendMms() {
         if (bundleMms > 0) {
-            mmsSent++;
+            multimediaMassagesSent++;
             bundleMms--;
-            System.out.println("MMS wysłany\n");
-        } else {
-            super.sendMms();
+            return true;
         }
+        return super.sendMms();
     }
 
     @Override

@@ -55,44 +55,46 @@ public class PrePaid extends Contract {
     }
 
     @Override
-    public void phoneCall(int seconds) {
-        if (balance >= callCost(seconds)) {
-            updateBalance(callCost(seconds));
+    public int phoneCall(int seconds) {
+        double callCost = callCost(seconds);
+        if (balance >= callCost) {
+            updateBalance(callCost);
             updateCallDuration(seconds);
-        } else if (balance >= oneSecondCost() && balance < callCost(seconds)) {
-            double secondsLeft = balance / oneSecondCost();
-            updateBalance(callCost((int) secondsLeft));
-            updateCallDuration((int) secondsLeft);
-            System.out.println("Połączenie przerwane brak środków na koncie\n");
-        } else {
-            System.out.println("Nie udało się wykonać połączenia brak środków na koncie\n");
+            return seconds;
+        } else if (balance >= oneSecondCost()) {
+            int secondsLeft = (int) (balance / oneSecondCost());
+            updateBalance(callCost(secondsLeft));
+            updateCallDuration(secondsLeft);
+            return secondsLeft;
         }
+        return 0;
     }
 
     @Override
-    public void sendText() {
+    public boolean sendText() {
         if (balance >= textCost) {
             updateBalance(textCost);
-            textsSent += 1;
-            System.out.println("SMS wysłany\n");
+            textMassagesSent++;
+            return true;
         } else {
-            System.out.println("Nie udało się wysłać SMSa\n");
+            return false;
         }
     }
 
     @Override
-    public void sendMms() {
+    public boolean sendMms() {
         if (balance >= mmsCost) {
             updateBalance(mmsCost);
-            mmsSent += 1;
-            System.out.println("MMS wysłany\n");
+            multimediaMassagesSent++;
+            return true;
         } else {
-            System.out.println("Nie udało się wysłać MMSa\n");
+
+            return false;
         }
     }
 
     @Override
     public String toString() {
-        return super.toString() + "Na koncie zostało " + String.format("%.2f", balance) + " zł\n";
+        return getClass().getSimpleName() + "\n" + super.toString() + "Na koncie zostało " + String.format("%.2f", balance) + " zł\n";
     }
 }

@@ -2,11 +2,11 @@ package pl.javastart.task.contracts;
 
 public class Monthly extends Contract {
 
-    private final double planCharge;
+    private final double monthlyPlanCharges;
     private boolean billPaid;
 
-    public Monthly(double planCharge, boolean billPaid) {
-        this.planCharge = planCharge;
+    public Monthly(double monthlyPlanCharges, boolean billPaid) {
+        this.monthlyPlanCharges = monthlyPlanCharges;
         this.billPaid = billPaid;
     }
 
@@ -19,31 +19,30 @@ public class Monthly extends Contract {
     }
 
     @Override
-    public void phoneCall(int seconds) {
+    public int phoneCall(int seconds) {
         if (billPaid) {
             callDurationInSeconds += seconds;
-        } else {
-            System.out.println("Faktura nieopłacona połączenia wychodzące zablokowane\n");
+            return seconds;
         }
+        return 0;
     }
 
     @Override
-    public void sendText() {
+    public boolean sendText() {
         if (billPaid) {
-            textsSent++;
-        } else {
-            System.out.println("Faktura nieopłacona wiadomości wychodzące zablokowane\n");
+            textMassagesSent++;
+            return true;
         }
-
+        return false;
     }
 
     @Override
-    public void sendMms() {
+    public boolean sendMms() {
         if (billPaid) {
-            mmsSent++;
-        } else {
-            System.out.println("Faktura nieopłacona wiadomości wychodzące zablokowane\n");
+            multimediaMassagesSent++;
+            return true;
         }
+        return false;
     }
 
     private String billStatus() {
@@ -55,6 +54,6 @@ public class Monthly extends Contract {
 
     @Override
     public String toString() {
-        return super.toString() + "Cena abonamentu: " + planCharge + "\nFaktura: " + billStatus() + "\n";
+        return getClass().getSimpleName() + "\n" + super.toString() + "Cena abonamentu: " + monthlyPlanCharges + "\nFaktura: " + billStatus() + "\n";
     }
 }
