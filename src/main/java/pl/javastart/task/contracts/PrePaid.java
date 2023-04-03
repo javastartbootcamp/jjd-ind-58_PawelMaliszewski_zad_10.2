@@ -2,7 +2,6 @@ package pl.javastart.task.contracts;
 
 public class PrePaid extends Contract {
 
-    private static final int SIXTY_SECONDS = 60;
     private double balance;
     private double textCost;
     private double mmsCost;
@@ -43,10 +42,6 @@ public class PrePaid extends Contract {
         this.minuteCost = minuteCost;
     }
 
-    private void setCallDuration(int seconds) {
-        setCallDurationInSeconds(seconds);
-    }
-
     private double oneSecondCost() {
         return minuteCost / SIXTY_SECONDS;
     }
@@ -78,7 +73,7 @@ public class PrePaid extends Contract {
     public void sendText() {
         if (balance >= textCost) {
             updateBalance(textCost);
-            setTextsSent(getTextsSent() + 1);
+            textsSent += 1;
             System.out.println("SMS wysłany\n");
         } else {
             System.out.println("Nie udało się wysłać SMSa\n");
@@ -89,7 +84,7 @@ public class PrePaid extends Contract {
     public void sendMms() {
         if (balance >= mmsCost) {
             updateBalance(mmsCost);
-            setMmsSent(getMmsSent() + 1);
+            mmsSent += 1;
             System.out.println("MMS wysłany\n");
         } else {
             System.out.println("Nie udało się wysłać MMSa\n");

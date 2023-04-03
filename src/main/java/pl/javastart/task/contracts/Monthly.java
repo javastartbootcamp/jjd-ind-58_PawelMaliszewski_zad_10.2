@@ -2,9 +2,11 @@ package pl.javastart.task.contracts;
 
 public class Monthly extends Contract {
 
+    private final double planCharge;
     private boolean billPaid;
 
-    public Monthly(boolean billPaid) {
+    public Monthly(double planCharge, boolean billPaid) {
+        this.planCharge = planCharge;
         this.billPaid = billPaid;
     }
 
@@ -19,7 +21,7 @@ public class Monthly extends Contract {
     @Override
     public void phoneCall(int seconds) {
         if (billPaid) {
-            setCallDurationInSeconds(getCallDurationInSeconds() + seconds);
+            callDurationInSeconds += seconds;
         } else {
             System.out.println("Faktura nieopłacona połączenia wychodzące zablokowane\n");
         }
@@ -28,7 +30,7 @@ public class Monthly extends Contract {
     @Override
     public void sendText() {
         if (billPaid) {
-            setTextsSent(getTextsSent() + 1);
+            textsSent++;
         } else {
             System.out.println("Faktura nieopłacona wiadomości wychodzące zablokowane\n");
         }
@@ -38,7 +40,7 @@ public class Monthly extends Contract {
     @Override
     public void sendMms() {
         if (billPaid) {
-            setMmsSent(getMmsSent() + 1);
+            mmsSent++;
         } else {
             System.out.println("Faktura nieopłacona wiadomości wychodzące zablokowane\n");
         }
@@ -53,6 +55,6 @@ public class Monthly extends Contract {
 
     @Override
     public String toString() {
-        return super.toString() + "Faktura: " + billStatus();
+        return super.toString() + "Cena abonamentu: " + planCharge + "\nFaktura: " + billStatus() + "\n";
     }
 }

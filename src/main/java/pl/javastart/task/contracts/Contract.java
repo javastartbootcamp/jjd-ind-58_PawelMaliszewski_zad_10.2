@@ -1,37 +1,14 @@
 package pl.javastart.task.contracts;
 
-public abstract class Contract implements Operations {
+public abstract class Contract {
 
-    private int textsSent;
-    private int mmsSent;
-    private int callDurationInSeconds;
-
-    protected int getTextsSent() {
-        return textsSent;
-    }
-
-    protected void setTextsSent(int textsSent) {
-        this.textsSent = textsSent;
-    }
-
-    protected int getMmsSent() {
-        return mmsSent;
-    }
-
-    protected void setMmsSent(int mmsSent) {
-        this.mmsSent = mmsSent;
-    }
-
-    protected int getCallDurationInSeconds() {
-        return callDurationInSeconds;
-    }
-
-    protected void setCallDurationInSeconds(int callDurationInSeconds) {
-        this.callDurationInSeconds = callDurationInSeconds;
-    }
+    protected static final int SIXTY_SECONDS = 60;
+    protected int textsSent;
+    protected int mmsSent;
+    protected int callDurationInSeconds;
 
     protected void updateCallDuration(int seconds) {
-        setCallDurationInSeconds(getCallDurationInSeconds() + seconds);
+        callDurationInSeconds += seconds;
     }
 
     @Override
@@ -41,4 +18,10 @@ public abstract class Contract implements Operations {
                 + "Wysłanych MMSów: " + mmsSent + "\n"
                 + "Liczba sekund rozmowy: " + callDurationInSeconds + "\n";
     }
+
+    public abstract void phoneCall(int seconds);
+
+    public abstract void sendText();
+
+    public abstract void sendMms();
 }
