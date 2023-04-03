@@ -19,7 +19,7 @@ public class Mixed extends PrePaid {
             updateBundleMinutes(seconds);
             updateCallDuration(seconds);
         } else if (bundleSecondLeft() > 0 && bundleSecondLeft() - seconds < 0) {
-            super.phoneCall(((bundleSecondLeft() -  seconds) * -1));
+            super.phoneCall((seconds - bundleSecondLeft()));
             updateCallDuration(bundleSecondLeft());
             updateBundleMinutes(bundleSecondLeft());
         } else {

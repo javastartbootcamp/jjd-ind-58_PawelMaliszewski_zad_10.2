@@ -12,16 +12,16 @@ public class Test {
         Phone prePaid = new Phone(new PrePaid(1, .10, .20, .5));
         Phone monthly1 = new Phone(new Monthly(99.99, true));
         Phone monthly2 = new Phone(new Monthly(99.99, false));
-        Phone mixed = new Phone(new Mixed(1, .1, .2, .5, 1, 1, 1));
+        Phone mixed = new Phone(new Mixed(100, .1, .2, .5, 1, 1, 1));
 
         mixed.printAccountState();
         mixed.sendText();
         mixed.sendMms();
         mixed.call(30);
         mixed.printAccountState();
-        mixed.call(35);
+        mixed.call(30);
         mixed.printAccountState();
-        mixed.call(240);
+        mixed.call(600);
         mixed.sendText();
         mixed.sendMms();
         mixed.printAccountState();
